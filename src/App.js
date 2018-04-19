@@ -2,48 +2,83 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {
-  HashRouter as Router,
-  Route,
-  Link,
-} from 'react-router-dom';
+    HashRouter as Router,
+    Route,
+    Link,
+    } from 'react-router-dom';
 import Sups from './Sup';
 import SupList from './SupList';
 
-// let allPosts = [
-//     { author: 'Nybblr', body: 'Taking a picture!' },
-//     { author: 'Robby', body: 'Hello Nybblr' }
-// ];
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            sups: [],
+        };
+    }
 
-// let PostRow = (post) =>
+    componentDidMount() {
+        this.fetchData();
+    }
 
-const nybblrSups = [Sups[0]];
-const robbySups = [Sups[1]];
+    fetchData() {
+        fetch('./my_backend/api/posts')
+            .then(res => res.json())
+            .then(sups => {
+                this.setState({ sups })
+            })
+    };
 
-let App = ({ match }) =>
-  <div>
-    <Link className="red" to="/users/nybblr" activeClassName="redred">Nybblr's Sups</Link>
-    <Link to="/users/robby">Robby's Sups</Link>
-    { match.params.id === 'nybblr' ?
-      <SupList sups={nybblrSups} />
-    :
-      <SupList sups={robbySups} />
-      }
-  </div>
+    render() {
+        let { sups } = this.state;
+
+        let refresh = () => {
+            this.fetchData();
+        }
+
+        return (
+            <div>
+                <SupList sups={newSups}
+                    // id={id}
+                    // body={body}
+                />
+            </div>
+        );
+    };
+};
 
 // class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
+//   state = {
+//     sups: []
+//   };
+
+//   componentDidMount() {
+//     this.fetchData();
 //   }
+
+//   fetchData() {
+//     fetch('./my_backend/api/posts')
+//     .then(res => res.json())
+//     .then(newSups => res.data.map(post => {
+//       return {
+//         id: post.id,
+//         body: post.body,
+//       };
+//     }));
+  
+//     const newState = Object.assign({}, this.state, {
+//     sups: newSups
+//   });
+
+//   this.setState(newState);
+// })
+
+// render() {
+//   return (
+//     <div className='App'>
+
+//   )
+// }
 // }
 
 export default App;

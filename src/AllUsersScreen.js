@@ -1,5 +1,6 @@
 import React from 'react';
 import SupList from './SupList';
+import getPosts from './index';
 
 const sups = [
     {id:1, author: 'Joel', body:'Love to camp and hike!', time: new Date()},

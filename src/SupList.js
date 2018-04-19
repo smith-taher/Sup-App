@@ -1,7 +1,7 @@
 import React from 'react';
 import Sup from './Sup';
 
-let SupList = ({sups}) =>
+let SupList = ({ sups }) =>
 <div>
     {
         sups.map(sup =>
